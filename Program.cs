@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace histogram1
@@ -43,13 +44,14 @@ namespace histogram1
                 .ForEach(g => {
                     Console.WriteLine($"LARGE: {g.Item} occured {g.Count} times.");
                 });
-            WriteHistogram(l.Select(g => g.Count).ToArray());
+            // WriteHistogram(l.Select(g => g.Count).ToList());
+            WriteHistogram(l.Select(g => (g.Item, g.Count)));
         }
 
-        private static void WriteHistogram(int[] histogram) {
-            foreach(int value in histogram) {
-                Console.Write($"{value}: ");
-                for(int i = 0; i < value; i++) {
+        private static void WriteHistogram(IEnumerable<(int, int)> histogram) {
+            foreach((int i, int c) value in histogram) {
+                Console.Write($"{value.i} ({value.c}): ");
+                for(int i = 0; i < value.c; i++) {
                     Console.Write("*");
                 }
                 Console.WriteLine();
